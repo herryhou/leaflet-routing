@@ -175,7 +175,9 @@ L.Routing = L.Control.extend({
   */
   ,addWaypoint: function(marker, prev, next, cb) {
     if (marker instanceof L.LatLng) {
-      marker = new L.Marker(marker, { title: this.options.tooltips.waypoint });
+      marker = new L.Marker(marker, {
+        icon: (this.options.icons.draw ? this.options.icons.draw : new L.Icon.Default()),
+        title: this.options.tooltips.waypoint });
     }
 
     marker._routing = {
@@ -303,7 +305,7 @@ L.Routing = L.Control.extend({
       i++;
       firstErr = firstErr || err;
       if (i === 2) {
-        $this.fire('routing:routeWaypointEnd', { err: firstErr });
+        $this.fire('routing:routeWaypointEnd', {marker:marker, err: firstErr });
         cb(firstErr, marker);
       }
     }
