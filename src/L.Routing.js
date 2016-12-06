@@ -375,6 +375,7 @@ L.Routing = L.Control.extend({
       return cb(null, true);
     }
 
+    this.fire('routing:segmentStart', {m1:m1, m2:m2});
     this._router(m1.getLatLng(), m2.getLatLng(), function(err, layer) {
       if (typeof layer === 'undefined') {
         var layer = new L.Polyline([m1.getLatLng(), m2.getLatLng()], $this.options.styles.nodata);
@@ -394,6 +395,7 @@ L.Routing = L.Control.extend({
 
       m1._routing.nextLine = layer;
       m2._routing.prevLine = layer;
+      $this.fire('routing:segmentEnd', {m1:m1, m2:m2});
 
       return cb(err, layer);
     });
